@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotune - Mood-Based Playlists</title>
+    
+    <link rel="stylesheet" href="/src/style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+
+    <div id="login-container" class="login-container">
+        <form id="auth-form" class="form-section">
+            <h2 id="form-title">Sign In</h2>
+            
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="email" placeholder="Email" required>
+            </div>
+            
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            
+            <button type="submit" id="auth-btn" class="auth-btn">Login</button>
+            
+            <p id="toggle-link" class="toggle-link">
+                Don't have an account? <a href="#">Create One</a>
+            </p>
+        </form>
+    </div>
+
+    <div id="app-container" class="app-container sidebar-layout" style="display: none;">
+        
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Emotune</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li data-view="playlist-view" class="active">
+                        <a href="#">
+                            <i class="fas fa-music"></i>
+                            <span>My Playlists</span>
+                        </a>
+                    </li>
+                    <li data-view="query-view">
+                        <a href="#">
+                            <i class="fas fa-search"></i>
+                            <span>Instant Query</span>
+                        </a>
+                    </li>
+                    <li data-view="history-view">
+                        <a href="#">
+                            <i class="fas fa-history"></i>
+                            <span>History</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logout-btn" class="logout-btn-sidebar">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="main-header">
+                <h1 id="view-title" class="header-placeholder">My Playlists</h1>
+            </div>
+
+            <div id="playlist-view" class="main-view view-active">
+                <div class="dashboard-content">
+                    
+                    <div class="dashboard-card">
+                        <div class="card-header mood-header">What are you feeling?</div>
+                        <div class="card-body">
+                            <p>Select your mood to open your saved playlist or search for a suggested one.</p>
+                            <div class="mood-selector">
+                                <button id="happy-playlist-mode">😊 Happy</button>
+                                <button id="sad-playlist-mode">😔 Sad</button>
+                                <button id="stressed-playlist-mode">🥵 Stressed</button>
+                                <button id="focused-playlist-mode">🧐 Focused</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header playlist-header">Set Your Playlists</div>
+                        <div class="card-body">
+                            <p>Enter the full URL (e.g., Spotify, YouTube) for your preferred mood playlists.</p>
+                            <div class="playlist-settings">
+                                <label for="happy-playlist">Happy Playlist URL:</label>
+                                <input type="url" id="happy-playlist" placeholder="e.g., https://spotify.com/happy-mix">
+
+                                <label for="sad-playlist">Sad Playlist URL:</label>
+                                <input type="url" id="sad-playlist" placeholder="e.g., https://youtube.com/calm-music">
+
+                                <label for="stressed-playlist">Stressed Playlist URL:</label>
+                                <input type="url" id="stressed-playlist" placeholder="e.g., https://spotify.com/sleep-aid">
+
+                                <label for="focused-playlist">Focused Playlist URL:</label>
+                                <input type="url" id="focused-playlist" placeholder="e.g., https://youtube.com/lofi-beats">
+                            </div>
+                            <button id="save-playlists-btn" class="auth-btn save-playlist-btn-style">Save Playlists</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="query-view" class="main-view">
+                <div class="dashboard-content">
+                    <div class="dashboard-card full-width-card">
+                        <div class="card-header mood-header">Instant Music Search</div>
+                        <div class="card-body">
+                            <p>Select your mood to choose a language and get a song suggestion. Click 'Generate New Song' until you find one you love!</p>
+                            
+                            <div class="mood-selector" id="query-mood-selector">
+                                <button id="happy-query-mode">😊 Happy</button>
+                                <button id="sad-query-mode">😔 Sad</button>
+                                <button id="stressed-query-mode">🥵 Stressed</button>
+                                <button id="focused-query-mode">🧐 Focused</button>
+                            </div>
+
+                            <div id="query-result-area" style="margin-top: 30px; padding: 15px; border-top: 1px solid #ddd; text-align: center; display: none;">
+                                <p id="current-recommendation-text" style="font-weight: bold; color: #3498db; margin-bottom: 10px;">
+                                    </p>
+                                <a id="song-link-display" href="#" target="_blank" class="auth-btn save-playlist-btn-style" style="background-color: #3498db; margin: 0; padding: 10px 20px;">
+                                    Listen on YouTube <i class="fab fa-youtube"></i>
+                                </a>
+                                
+                                <button id="generate-new-btn" class="auth-btn" style="width: auto; margin-top: 10px; background-color: #f39c12;">
+                                    Generate New Song
+                                </button>
+                            </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="history-view" class="main-view">
+                <div class="dashboard-content">
+                    <div class="dashboard-card full-width-card">
+                        <div class="card-header mood-header">Mood Log History</div>
+                        <div class="card-body">
+                            <p>A record of the moods you've logged and the mode used (Playlist/Query).</p>
+                            <div id="mood-log-list" class="mood-log-list">
+                                <p style="text-align: center; color: #999;">Loading history...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <div id="language-modal" class="modal-overlay" style="display:none;">
+        <div class="modal-content">
+            <h3>Choose Language for Music</h3>
+            <p>Select the language you want for your instant music suggestion:</p>
+            <div id="language-options" class="mood-selector">
+                <button data-lang="japanese">🇯🇵 Japanese</button>
+                <button data-lang="english">🇬🇧 English</button>
+                <button data-lang="tagalog">🇵🇭 Tagalog</button>
+                <button data-lang="korean">🇰🇷 Korean</button>
+            </div>
+            <button id="close-modal-btn" class="auth-btn save-playlist-btn-style" style="margin-top: 20px;">Cancel</button>
+        </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>
